@@ -18,8 +18,13 @@
 #
 ##############################################################################
 from lxml import etree
-from openerp import models, api
+from openerp import models, fields, api
 
+
+class SaleOrder(models.Model):
+    _inherit = 'sale.order'
+
+    parent_id = fields.Many2one('res.partner',related='partner_id.parent_id')
 
 class MailWizardInvite(models.TransientModel):
     _inherit = 'mail.wizard.invite'
@@ -41,7 +46,6 @@ class MailWizardInvite(models.TransientModel):
             view_id=view_id, view_type=view_type, toolbar=toolbar,
             submenu=submenu)
         arch = etree.fromstring(result['arch'])
-        #import pdb;pdb.set_trace()
         issaleorder = (self.env.context.get('default_res_model') == "sale.order")
         order = False
         pid = 0
