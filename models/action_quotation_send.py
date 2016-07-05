@@ -15,7 +15,6 @@ class sale_order(osv.osv):
         This function opens a window to compose an email, with the edi sale template message loaded by default
         '''
         assert len(ids) == 1, 'This option should only be used for a single id at a time.'
-        import pdb;pdb.set_trace()
         ir_model_data = self.pool.get('ir.model.data')
         try:
             template_id = ir_model_data.get_object_reference(cr, uid, 'sale', 'email_template_edi_sale')[1]
